@@ -45,36 +45,28 @@ router.post('/', asyncHandler(async (req, res) => {
 }));
 
 // get single book to update
-router.get('/:id', asyncHandler(async(req, res) => {
+router.get("/:id", asyncHandler(async (req, res, next) => {
   const book = await Book.findByPk(req.params.id);
-  if(book){
-    res.render("books/update-book", {book: book, title: book.title})
+  if (book) {
+    res.render("books/update-book", { book: book, title: book.title }); 
   } else {
-    res.sendStatus(404);
+    const err = new Error();
+    err.status = 404;
+    err.message = "Looks like the book you requested doesn't exist."
+    next(err)
   }
 }));
 
-// update book
-router.post('/:id', asyncHandler(async(req, res) => {
-  let book;
-  try {
-    book = await Book.findByPk(req.params.id);
-    if(book){
+/* UPDATE individual book entry */
+router.post('/:id', asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  if (book) {
       await book.update(req.body);
-      book.id = req.params.id;
       res.redirect("/books");
-    }else{
-      throw error;
-    }
-  } catch (error) {
-    if(error.name === "SequelizeValidationError") {
-      book = await Book.build(req.body);
-      book.id = req.params.id; // make sure correct article gets updated
-      res.redirect("/books")
-    } else {
-      throw error;
-    }
+  } else {
+      res.sendStatus(404);
   }
+  
 }));
 
 
