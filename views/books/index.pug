@@ -1,5 +1,12 @@
-extends layout
+extends layout 
 
 block content
-  h1= title
-  p Welcome to #{title}
+    each book in books  
+        book   
+            tr  
+                td
+                    a(href='/books/' + book.id)= book.title
+                td= book.author
+                td= book.genre
+                td= book.year
+  
