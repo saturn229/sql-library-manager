@@ -10,7 +10,7 @@ var bookRoute = require('./routes/books');
 (async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force:true });
+    await sequelize.sync();
     console.log("Database connection successful")
   } catch (error) {
     console.log("Error connecting to the database: ", error)
