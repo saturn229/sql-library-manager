@@ -22,12 +22,11 @@ router.get('/', asyncHandler(async (req, res)  => {
 
 
 // new book entry
-router.get('/new', (req, res) => {
-  res.render('books/new-book', { books: {}})
-})
+router.get('/new', (req,res) => {
+  res.render('books/new-book', { book: {} });
+});
 
-
-//post new book
+/* POST create book entry */
 router.post('/', asyncHandler(async (req, res) => {
   let book;
   try {
@@ -43,6 +42,7 @@ router.post('/', asyncHandler(async (req, res) => {
   }
 
 }));
+
 
 // get single book to update
 router.get("/:id", asyncHandler(async (req, res, next) => {
