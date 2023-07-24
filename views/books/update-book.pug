@@ -4,6 +4,8 @@ head
   link(rel='stylesheet' href='/stylesheets/style.css')
 h1 Update Book
 
+include errors
+
 form(action="/books/" + book.id, method="post")
   p
     label(for='title') Title
